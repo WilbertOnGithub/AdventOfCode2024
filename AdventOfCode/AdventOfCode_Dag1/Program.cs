@@ -6,27 +6,27 @@ partial class Program
 {
     static void Main(string[] args)
     {
-        List<int> firstList = new();
-        List<int> secondList = new();
+        List<int> leftList = new();
+        List<int> rightList = new();
 
         foreach (string line in File.ReadLines("input.txt"))
         {
             Match match = NumbersRegex().Match(line);
 
             int first = int.Parse(match.Groups["first"].Value);
-            firstList.Add(first);
+            leftList.Add(first);
 
             int second = int.Parse(match.Groups["second"].Value);
-            secondList.Add(second);
+            rightList.Add(second);
         }
 
-        firstList.Sort();
-        secondList.Sort();
+        leftList.Sort();
+        rightList.Sort();
 
         int result = 0;
-        for (int i = 0; i < firstList.Count() ; i++)
+        for (int i = 0; i < leftList.Count() ; i++)
         {
-            result += Math.Abs(firstList[i] - secondList[i]);
+            result += leftList[i] * (rightList.Count(x => x == leftList[i]));
         }
 
         Console.WriteLine(result);
